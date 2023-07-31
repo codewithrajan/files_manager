@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2021 at 06:20 AM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.28
+-- Generation Time: Jul 31, 2023 at 07:25 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -34,16 +35,19 @@ CREATE TABLE `files` (
   `folder_id` int(30) NOT NULL,
   `file_type` varchar(50) NOT NULL,
   `file_path` text NOT NULL,
-  `is_public` tinyint(1) DEFAULT '0',
-  `date_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `is_public` tinyint(1) DEFAULT 0,
+  `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `files`
 --
 
 INSERT INTO `files` (`id`, `name`, `description`, `user_id`, `folder_id`, `file_type`, `file_path`, `is_public`, `date_updated`) VALUES
-(1, 'My File', 'This is my file', 1, 11, 'txt', '1616126640_My File.txt', 1, '2021-03-19 11:04:13');
+(5, 'first', '', 4, 18, 'py', '1690818960_first.py', 0, '2023-07-31 21:26:49'),
+(6, 'graphic', 'this file will share to all users.', 4, 18, 'py', '1690819020_graphic.py', 1, '2023-07-31 21:27:16'),
+(7, 'Screenshot (1085)', 'something is important.\r\n', 4, 0, 'png', '1690819080_Screenshot (1085).png', 1, '2023-07-31 21:28:11'),
+(8, '12209937ca2', '', 6, 0, 'png', '1690822560_12209937ca2.png', 1, '2023-07-31 22:26:54');
 
 -- --------------------------------------------------------
 
@@ -55,16 +59,20 @@ CREATE TABLE `folders` (
   `id` int(30) NOT NULL,
   `user_id` int(30) NOT NULL,
   `name` varchar(200) NOT NULL,
-  `parent_id` int(30) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `parent_id` int(30) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `folders`
 --
 
 INSERT INTO `folders` (`id`, `user_id`, `name`, `parent_id`) VALUES
-(10, 3, 'My Folder', 0),
-(11, 1, 'New Folder', 0);
+(18, 4, 'python', 0),
+(19, 4, 'php', 0),
+(20, 4, 'new python', 18),
+(21, 4, 'abc', 0),
+(22, 4, 'mca', 0),
+(23, 6, 'mca', 0);
 
 -- --------------------------------------------------------
 
@@ -77,16 +85,17 @@ CREATE TABLE `users` (
   `name` varchar(200) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1+admin , 2 = users'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `type` tinyint(1) NOT NULL DEFAULT 2 COMMENT '1+admin , 2 = users'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `type`) VALUES
-(1, 'Administrator', 'admin', 'admin', 1),
-(3, 'Mark Jason ', 'user', 'user', 2);
+(4, 'Rajan Kumar', 'rajan', 'rajan', 2),
+(5, 'User', 'user', 'user', 1),
+(6, 'himanshu', 'root', 'root', 1);
 
 --
 -- Indexes for dumped tables
@@ -118,17 +127,21 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `folders`
 --
 ALTER TABLE `folders`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
